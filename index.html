@@ -2,32 +2,32 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Sadece zeybikkk için 💖</title>
+<title>Sadece zeybikkk için 💜</title>
 
 <style>
 body{
     margin:0;
     height:100vh;
+    background:radial-gradient(circle at center,#1a001f,#000000 70%);
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    flex-direction:column;
     font-family:'Segoe UI',sans-serif;
     overflow:hidden;
-    flex-direction:column;
+    color:white;
 }
 
 .overlay{
     position:fixed;
     width:100%;
     height:100%;
-    backdrop-filter:blur(10px);
-    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(8px);
+    background:rgba(0,0,0,0.6);
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    color:white;
     font-size:28px;
     text-align:center;
     z-index:10;
@@ -35,14 +35,15 @@ body{
 }
 
 .overlay button{
-    margin-top:20px;
-    padding:10px 25px;
+    margin-top:25px;
+    padding:12px 30px;
     border:none;
-    border-radius:20px;
-    background:#ff4d88;
+    border-radius:30px;
+    background:#b46cff;
     color:white;
     font-size:16px;
     cursor:pointer;
+    box-shadow:0 0 15px #b46cff;
 }
 
 .hidden{
@@ -60,73 +61,76 @@ body{
     opacity:1;
 }
 
-.flower{
-    position:relative;
-    width:150px;
-    height:150px;
+.flower-wrapper{
+    width:250px;
+    height:250px;
     margin:auto;
+    transform:scale(0.5);
+    opacity:0;
+    transition:1.5s ease;
 }
 
-.petal{
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:#ff4d88;
-    border-radius:50%;
-    transform:scale(0);
-    transition:all 1s ease;
+.flower-wrapper.showFlower{
+    transform:scale(1);
+    opacity:1;
+    animation:pulse 2s infinite alternate;
 }
 
-.petal:nth-child(1){ top:0; left:40px;}
-.petal:nth-child(2){ top:40px; left:80px;}
-.petal:nth-child(3){ top:80px; left:40px;}
-.petal:nth-child(4){ top:40px; left:0;}
+@keyframes pulse{
+    from{filter:drop-shadow(0 0 10px #8f3fff);}
+    to{filter:drop-shadow(0 0 25px #d59cff);}
+}
 
-.center{
-    position:absolute;
-    width:60px;
-    height:60px;
-    background:yellow;
-    border-radius:50%;
-    top:45px;
-    left:45px;
+.flower-svg ellipse{
+    fill:#b46cff;
+    transform-origin:100px 100px;
     transform:scale(0);
-    transition:all 1s ease 1s;
+    transition:1s ease;
+}
+
+.core{
+    fill:#ffffff;
+    opacity:0;
+    filter:drop-shadow(0 0 20px #ffffff);
+    transition:1s ease;
 }
 
 .note{
     opacity:0;
     margin-top:20px;
-    transition:1s;
+    transition:1.5s;
 }
 
 textarea{
-    width:280px;
-    height:100px;
-    border-radius:15px;
+    width:300px;
+    height:110px;
+    border-radius:20px;
     border:none;
     padding:15px;
-    font-size:14px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:15px;
     resize:none;
-}
-
-.show{
-    transform:scale(1);
+    backdrop-filter:blur(10px);
 }
 
 .visible{
     opacity:1;
 }
 
-.heart{
+.particle{
     position:absolute;
-    font-size:20px;
-    animation:float 4s linear infinite;
+    width:6px;
+    height:6px;
+    background:#d59cff;
+    border-radius:50%;
+    animation:floatUp 5s linear infinite;
+    opacity:0.8;
 }
 
-@keyframes float{
-    0%{transform:translateY(0) scale(1);}
-    100%{transform:translateY(-800px) scale(1.5);}
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:0.8;}
+    100%{transform:translateY(-800px);opacity:0;}
 }
 </style>
 </head>
@@ -134,91 +138,102 @@ textarea{
 <body>
 
 <div class="overlay" id="overlay">
-    Sadece zeybikkk için… 💖<br>
+    Sadece zeybikkk için… 💜<br>
     <button onclick="startExperience()">Hazır mısın? ✨</button>
 </div>
 
 <div class="container" id="mainPage">
-    <div class="flower">
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="center"></div>
-    </div>
 
-    <div class="note">
-        <textarea>
+<div class="flower-wrapper">
+<svg viewBox="0 0 200 200" class="flower-svg">
+  <circle cx="100" cy="100" r="20" class="core"/>
+  <g>
+    <ellipse cx="100" cy="55" rx="18" ry="40"/>
+    <ellipse cx="145" cy="100" rx="18" ry="40" transform="rotate(90 145 100)"/>
+    <ellipse cx="100" cy="145" rx="18" ry="40"/>
+    <ellipse cx="55" cy="100" rx="18" ry="40" transform="rotate(90 55 100)"/>
+    <ellipse cx="135" cy="65" rx="18" ry="40" transform="rotate(45 135 65)"/>
+    <ellipse cx="65" cy="65" rx="18" ry="40" transform="rotate(-45 65 65)"/>
+  </g>
+</svg>
+</div>
+
+<div class="note">
+<textarea>
 Belki seni biraz üzdüm...
 Ama kalbimdeki yerin hep aynı.
-Beni affeder misin? 💖
-        </textarea>
-    </div>
+Beni affeder misin? 💜
+</textarea>
+</div>
+
 </div>
 
 <audio id="music" src="hanimefendi.mp3"></audio>
 
 <script>
 function startExperience(){
+    const music = document.getElementById("music");
+    music.play().then(()=>{
+        music.volume = 0;
+        fadeInMusic(music,3000);
+    });
+
     document.getElementById("overlay").classList.add("hidden");
     const page = document.getElementById("mainPage");
     page.classList.add("showPage");
 
-    setTimeout(openFlower,1000);
+    setTimeout(openFlower,800);
 }
 
 function openFlower(){
-    const petals = document.querySelectorAll('.petal');
-    const center = document.querySelector('.center');
-    const note = document.querySelector('.note');
-    const music = document.getElementById("music");
+    const wrapper = document.querySelector(".flower-wrapper");
+    const petals = document.querySelectorAll("ellipse");
+    const core = document.querySelector(".core");
+    const note = document.querySelector(".note");
+
+    wrapper.classList.add("showFlower");
 
     petals.forEach((p,i)=>{
         setTimeout(()=>{
-            p.classList.add('show');
-        }, i*400);
+            p.style.transform="scale(1)";
+        },i*200);
     });
 
     setTimeout(()=>{
-        center.classList.add('show');
-    },1600);
+        core.style.opacity="1";
+    },1200);
 
     setTimeout(()=>{
-        note.classList.add('visible');
-        fadeInMusic(music, 2000); // 2 saniyede yumuşak giriş
-    },2500);
+        note.classList.add("visible");
+    },2000);
 
-    createHearts();
+    createParticles();
 }
 
-function fadeInMusic(audio, duration){
-    audio.volume = 0;
-    audio.play();
+function fadeInMusic(audio,duration){
+    let steps=30;
+    let stepTime=duration/steps;
+    let volumeStep=1/steps;
+    let currentStep=0;
 
-    let step = 0.05;
-    let interval = duration * step;
-
-    let fade = setInterval(function(){
-        if(audio.volume < 1){
-            audio.volume = Math.min(audio.volume + step, 1);
-        } else {
+    let fade=setInterval(function(){
+        currentStep++;
+        audio.volume=Math.min(volumeStep*currentStep,1);
+        if(currentStep>=steps){
             clearInterval(fade);
         }
-    }, interval);
+    },stepTime);
 }
 
-function createHearts(){
+function createParticles(){
     setInterval(()=>{
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random()*100+"vw";
-        heart.style.top = "100vh";
-        heart.style.fontSize = (15+Math.random()*20)+"px";
-        document.body.appendChild(heart);
-
-        setTimeout(()=>{heart.remove()},4000);
-    },500);
+        const p=document.createElement("div");
+        p.classList.add("particle");
+        p.style.left=Math.random()*100+"vw";
+        p.style.top="100vh";
+        document.body.appendChild(p);
+        setTimeout(()=>{p.remove()},5000);
+    },300);
 }
 </script>
 

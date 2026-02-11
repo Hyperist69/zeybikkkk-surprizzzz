@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Sadece zeybikkk için 💖</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    flex-direction:column;
+}
+
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.35);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    font-size:28px;
+    text-align:center;
+    z-index:10;
+    transition:1.5s;
+}
+
+.overlay button{
+    margin-top:20px;
+    padding:10px 25px;
+    border:none;
+    border-radius:20px;
+    background:#ff4d88;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+.container{
+    text-align:center;
+    opacity:0;
+    transition:2s;
+}
+
+.container.showPage{
+    opacity:1;
+}
+
+.flower{
+    position:relative;
+    width:150px;
+    height:150px;
+    margin:auto;
+}
+
+.petal{
+    position:absolute;
+    width:70px;
+    height:70px;
+    background:#ff4d88;
+    border-radius:50%;
+    transform:scale(0);
+    transition:all 1s ease;
+}
+
+.petal:nth-child(1){ top:0; left:40px;}
+.petal:nth-child(2){ top:40px; left:80px;}
+.petal:nth-child(3){ top:80px; left:40px;}
+.petal:nth-child(4){ top:40px; left:0;}
+
+.center{
+    position:absolute;
+    width:60px;
+    height:60px;
+    background:yellow;
+    border-radius:50%;
+    top:45px;
+    left:45px;
+    transform:scale(0);
+    transition:all 1s ease 1s;
+}
+
+.note{
+    opacity:0;
+    margin-top:20px;
+    transition:1s;
+}
+
+textarea{
+    width:280px;
+    height:100px;
+    border-radius:15px;
+    border:none;
+    padding:15px;
+    font-size:14px;
+    resize:none;
+}
+
+.show{
+    transform:scale(1);
+}
+
+.visible{
+    opacity:1;
+}
+
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation:float 4s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0) scale(1);}
+    100%{transform:translateY(-800px) scale(1.5);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay">
+    Sadece zeybikkk için… 💖<br>
+    <button onclick="startExperience()">Hazır mısın? ✨</button>
+</div>
+
+<div class="container" id="mainPage">
+    <div class="flower">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="center"></div>
+    </div>
+
+    <div class="note">
+        <textarea>
+Belki seni biraz üzdüm...
+Ama kalbimdeki yerin hep aynı.
+Beni affeder misin? 💖
+        </textarea>
+    </div>
+</div>
+
+<audio id="music" src="hanimefendi.mp3"></audio>
+
+<script>
+function startExperience(){
+    document.getElementById("overlay").classList.add("hidden");
+    const page = document.getElementById("mainPage");
+    page.classList.add("showPage");
+
+    setTimeout(openFlower,1000);
+}
+
+function openFlower(){
+    const petals = document.querySelectorAll('.petal');
+    const center = document.querySelector('.center');
+    const note = document.querySelector('.note');
+    const music = document.getElementById("music");
+
+    petals.forEach((p,i)=>{
+        setTimeout(()=>{
+            p.classList.add('show');
+        }, i*400);
+    });
+
+    setTimeout(()=>{
+        center.classList.add('show');
+    },1600);
+
+    setTimeout(()=>{
+        note.classList.add('visible');
+        fadeInMusic(music, 2000); // 2 saniyede yumuşak giriş
+    },2500);
+
+    createHearts();
+}
+
+function fadeInMusic(audio, duration){
+    audio.volume = 0;
+    audio.play();
+
+    let step = 0.05;
+    let interval = duration * step;
+
+    let fade = setInterval(function(){
+        if(audio.volume < 1){
+            audio.volume = Math.min(audio.volume + step, 1);
+        } else {
+            clearInterval(fade);
+        }
+    }, interval);
+}
+
+function createHearts(){
+    setInterval(()=>{
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random()*100+"vw";
+        heart.style.top = "100vh";
+        heart.style.fontSize = (15+Math.random()*20)+"px";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{heart.remove()},4000);
+    },500);
+}
+</script>
+
+</body>
+</html>
